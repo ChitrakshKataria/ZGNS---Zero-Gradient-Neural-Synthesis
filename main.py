@@ -1,4 +1,6 @@
+import openml
 import torch
+from FetchDatasets import *
 
 
 ### Device Agnostic code
@@ -28,3 +30,20 @@ def GetDevice(forceCPU=False):
 
 device = GetDevice(forceCPU=False)
 print(device)
+
+
+### Fetching and Downloading Datasets
+### This will later on go in the training loop, training on one dataset at a time.
+
+MaxDatasets = getDatasets(limit=False)
+datasetIndex = 0
+for i in range(datasetIndex, len(MaxDatasets)):
+    did = int(MaxDatasets["did"].iloc[i])
+    openml.datasets.get_dataset(did).get_data()
+    print(f"DatasetIndex: {i}")
+
+
+
+
+
+datasetIndex = 0
